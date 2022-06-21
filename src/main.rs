@@ -26,6 +26,41 @@ fn main() {
 }
 
 
+
+fn search(text: &str, search_string: &str) -> i32 {
+    let table = build_table(search_string.to_string());
+
+    let search_string_chars: Vec<char> = search_string.chars().collect();
+    let text_chars: Vec<char> = text.chars().collect();
+    let search_string_length = search_string.len();
+    let text_length = text.len();
+
+    let mut k = 0;
+    let mut i = 0;
+
+    while k + i < text_length {
+        if search_string_chars[i] == text_chars[k + i] {
+            i += 1;
+            if i == search_string_length {
+                return k.try_into().unwrap()
+            }
+        } else if table[i] == -1 {
+            k = k + i + 1;
+            i = 0;
+        } else {
+            k = k + i - table[i];
+            i = table[i];
+        }
+    }
+
+    (-1)
+
+} 
+
+
+
+
+
 fn build_table(input: String) -> Vec<i32>{
 
     let chars : Vec<char> = input.chars().collect();
