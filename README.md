@@ -15,7 +15,9 @@ Example of downloading and using the KMP algorithm on a macOS machine:
 
 `cd documents/personal`   
 
-`mkdir rust-algorithms`   
+`mkdir rust-algorithms`    
+
+`cd rust-algorithms`
 
 `git clone https://github.com/UncountableHollows/String-algorithms-in-Rust.git`  
 
