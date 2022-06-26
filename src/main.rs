@@ -16,12 +16,15 @@ fn main() {
 
         let file_contents = fs::read_to_string(filename)
             .expect("Invalid file name");
-
+        println!("File contents are: {}", &file_contents);
         let table = build_table(String::from(search_string));
         
         for i in table {
             print!("{} ", i);
         }
+
+        let search_result = search(&file_contents, search_string);
+        println!("Search result is: {}", search_result);
     }
 }
 
@@ -33,23 +36,23 @@ fn search(text: &str, search_string: &str) -> i32 {
     let search_string_chars: Vec<char> = search_string.chars().collect();
     let text_chars: Vec<char> = text.chars().collect();
     let search_string_length = search_string.len();
-    let text_length = text.len();
+    let text_length = text.len() as i32;
 
-    let mut k = 0;
-    let mut i = 0;
+    let mut k: i32 = 0;
+    let mut i: i32 = 0;
 
     while k + i < text_length {
-        if search_string_chars[i] == text_chars[k + i] {
+        if search_string_chars[i as usize] == text_chars[(k + i) as usize] {
             i += 1;
-            if i == search_string_length {
+            if i as usize == search_string_length {
                 return k.try_into().unwrap()
             }
-        } else if table[i] == -1 {
+        } else if table[i as usize] == -1 {
             k = k + i + 1;
             i = 0;
         } else {
-            k = k + i - table[i];
-            i = table[i];
+            k = k + i - table[i as usize];
+            i = table[i as usize];
         }
     }
 
